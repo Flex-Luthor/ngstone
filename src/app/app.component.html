@@ -1,10 +1,13 @@
 <h2 class="title">NgStone</h2>
-<div>{{title}}</div>
-<app-sidebar></app-sidebar>
 <div class="row">
-  <div *ngFor="let card of cards">
-    <div class="col-lg-3">
-      <img class="cardPic" src="{{card.img}}">
+  <div class="col-md-3">
+    <app-sidebar></app-sidebar>
+  </div>
+  <div class="col-md-9">
+    <div *ngFor="let card of cards">
+      <div>
+        <img class="cardPic" src="{{card.img}}">
+      </div>
     </div>
   </div>
-</div>s
+</div>
