@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
 
 @Component({
   selector: 'app-card-section',
@@ -11,6 +13,8 @@ export class CardSectionComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  // https://api.hearthstonejson.com/v1/18336/enUS/cards.json
 
   cards: any[] = [
   {
