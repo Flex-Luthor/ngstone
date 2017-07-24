@@ -12,7 +12,7 @@ import * as _ from "lodash";
   styleUrls: ['./card-section.component.scss']
 })
 export class CardSectionComponent implements OnInit {
-  cards
+  cards: any;
   
   constructor(private http : Http) { }
 
@@ -23,14 +23,21 @@ export class CardSectionComponent implements OnInit {
   doGetRequest() {
     let headers = new Headers({"X-Mashape-Key" : "q9P2San3chmshCsx246WEr8cZacZp18VGmVjsnoWVT8NUtdqep"})
     let options = new RequestOptions({headers: headers})
-    return this.http.get('https://omgvamp-hearthstone-v1.p.mashape.com/cards', options)
-                    .map((data: any) => data.json())
-                    .subscribe(
-                      (data: any) => {this.cards = [];
-                                    console.log(this.cards)
-                                    _.flatMap(data, (a) => {
-                                    console.log(this.cards)})},
-                                    err => console.log(err))
+    return this.http
+      .get('https://omgvamp-hearthstone-v1.p.mashape.com/cards?collectible=1&locale=enUS', options)
+      .map((data: any) => data.json())
+      .subscribe(
+        (data: any) => {
+          this.cards = [];
+          _.flatMap(data, (a) => {
+            _.forEach(a, (iteratee) => {
+              if (iteratee.cost >= 0 && iteratee.img !== 'http://wow.zamimg.com/images/hearthstone/cards/enus/original/CRED_50.png'){
+                this.cards.push(iteratee)
+              }
+            })})
+            this.cards = _.orderBy(this.cards, 'cost')
+          },
+          err => console.log(err))
   }
 
   extractData(res: Response) {
